@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="/styles.css"> 
+</head>
+<body>
+    <h1>Welcome to the Translation Service</h1>
+    <p>This service uses the Translate API to detect languages and translate text.</p>
+    <p class="highlight">Since it costs me $20 for some reasons, I need your Name and Email.</p>
+
+    <form action="/translate" method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <input type="submit" value="Log in">
+    </form>
+
+    <br>
+    <form id="checkLoginCountForm">
+        <label for="checkEmail">Enter your Email to check your Login Count:</label><br>
+        <input type="email" id="checkEmail" required><br><br>
+        <input type="button" value="Check Login Count" onclick="checkLoginCount()">
+    </form>
+    
+    <p id="loginCountResult"></p>    
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
