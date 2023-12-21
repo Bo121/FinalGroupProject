@@ -30,5 +30,5 @@ This web application provides a convenient interface for users to access languag
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Bo121/FinalGroupProject
-cd FinalGroupProject
+git clone https://github.com/Bo121/Translation-Service-Web-Application
+cd Translation-Service-Web-Application
