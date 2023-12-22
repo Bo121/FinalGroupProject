@@ -1,6 +1,3 @@
-Group Members: Shengquan Yang (syang118)
-               Xueyi An (xan)
-
 Description: A fast and user-friendly translation service leveraging the power of Google Translate to 
              effortlessly bridge language barriers and connect people globally. 
              (Use MongoDB to store and retrieve the user information)
