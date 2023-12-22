@@ -151,7 +151,6 @@ async function detectLanguage() {
     const data = await response.json();
     const languageCode = data.data.detections[0][0].language;
 
-    // Convert the language code to the full language name
     const languageName = languageNames[languageCode] || languageCode;
 
     const formattedLanguage = `<strong style="color: blue;font-size: larger;">${languageName}</strong>`;
@@ -171,9 +170,8 @@ async function listLanguages() {
     const languageCodes = await response.json();
     
     const resultsContainer = document.getElementById('languageListResults');
-    resultsContainer.innerHTML = ''; // Clear the list first
+    resultsContainer.innerHTML = ''; 
     languageCodes.forEach(code => {
-      // Assuming you have a way to map codes to full language names
       const languageName = languageNames[code] || code;
       const languageDiv = document.createElement('div');
       languageDiv.className = 'language-item';
