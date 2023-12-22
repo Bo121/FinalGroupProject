@@ -163,13 +163,18 @@ async function detectLanguage() {
   }
 }
 
-
 async function listLanguages() {
+  const resultsContainer = document.getElementById('languageListResults');
+
+  if (resultsContainer.innerHTML !== '') {
+    resultsContainer.innerHTML = '';
+    return;
+  }
+
   try {
     const response = await fetch('/listLanguages');
     const languageCodes = await response.json();
-    
-    const resultsContainer = document.getElementById('languageListResults');
+
     resultsContainer.innerHTML = ''; 
     languageCodes.forEach(code => {
       const languageName = languageNames[code] || code;
@@ -181,14 +186,21 @@ async function listLanguages() {
     });
   } catch (error) {
     console.error(error);
-    document.getElementById('languageListResults').innerHTML = 'Error listing languages';
+    resultsContainer.innerHTML = 'Error listing languages';
   }
 }
 
-
+function getLanguageCodeByName(languageName) {
+  for (const [code, name] of Object.entries(languageNames)) {
+    if (name.toLowerCase() === languageName.toLowerCase()) {
+      return code;
+    }
+  }
+  return null; 
+}
 
 async function translateText() {
-  const text = document.getElementById('translateText').value;
+  const text = document.getElementById('detectText').value;
   const targetLang = document.getElementById('targetLang').value;
 
   try {
@@ -239,6 +251,3 @@ async function checkLoginCount() {
 function setTargetLanguage(languageCode) {
   document.getElementById('targetLang').value = languageCode;
 }
-
-
-

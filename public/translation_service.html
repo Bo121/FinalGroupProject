@@ -8,13 +8,7 @@
     <link rel="stylesheet" href="/styles.css"> 
 </head>
 <body>
-    <h1>Google Translate API Demo</h1>
-
-    <div class="input-box">
-        <h2>Detect Language</h2>
-        <textarea id="detectText" class="styled-textarea" placeholder="Enter text to detect language"></textarea>
-        <button class="button" onclick="detectLanguage()">Detect Language</button>
-    </div>
+    <h1>Translation Service</h1>
 
     <div class="input-box">
         <h2>List Languages</h2>
@@ -25,11 +19,13 @@
     </div>
 
     <div class="input-box">
-        <h2>Translate Text</h2>
-        <textarea id="translateText" class="styled-textarea" placeholder="Enter text to translate"></textarea>
-        <input type="text" id="targetLang" class="styled-input" placeholder="Enter target language code (e.g., 'es')">
+        <h2>Detect / Translate Language</h2>
+        <textarea id="detectText" class="styled-textarea" placeholder="Enter text to detect language or to translate"></textarea>
+        <button class="button" onclick="detectLanguage()">Detect Language</button>
+        <input type="text" id="targetLang" class="styled-input" placeholder="Enter target language code or name (e.g., 'es' or 'Spanish')">
         <button class="button" onclick="translateText()">Translate</button>
     </div>
+
 
     <div class="input-box">
         <h2>Results:</h2>

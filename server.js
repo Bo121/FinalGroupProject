@@ -196,6 +196,7 @@ app.post('/translate', async (req, res) => {
   }
 });
 
+
 app.post('/detectLanguage', (req, res) => {
   const { text } = req.body;
 
