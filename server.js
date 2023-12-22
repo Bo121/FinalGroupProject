@@ -15,9 +15,149 @@ app.use(express.static('public'));
 
 const uri = process.env.MONGO_CONNECTION_STRING;
 const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
-const databaseAndCollection = {db: "CMSC335_Final", collection:"FinalProject"};
+const databaseAndCollection = {db: "CMSC335", collection:"FinalProject"};
 
 const rapidApiHost = 'google-translate1.p.rapidapi.com';
+
+const languageNames = {
+  'af': 'Afrikaans',
+  'ak': 'Akan',
+  'am': 'Amharic',
+  'ar': 'Arabic',
+  'as': 'Assamese',
+  'ay': 'Aymara',
+  'az': 'Azerbaijani',
+  'be': 'Belarusian',
+  'bg': 'Bulgarian',
+  'bho': 'Bhojpuri',
+  'bm': 'Bambara',
+  'bn': 'Bengali',
+  'bs': 'Bosnian',
+  'ca': 'Catalan',
+  'ceb': 'Cebuano',
+  'ckb': 'Central Kurdish',
+  'co': 'Corsican',
+  'cs': 'Czech',
+  'cy': 'Welsh',
+  'da': 'Danish',
+  'de': 'German',
+  'doi': 'Dogri',
+  'dv': 'Dhivehi',
+  'ee': 'Ewe',
+  'el': 'Greek',
+  'en': 'English',
+  'eo': 'Esperanto',
+  'es': 'Spanish',
+  'et': 'Estonian',
+  'eu': 'Basque',
+  'fa': 'Persian',
+  'fi': 'Finnish',
+  'fr': 'French',
+  'fy': 'Western Frisian',
+  'ga': 'Irish',
+  'gd': 'Scottish Gaelic',
+  'gl': 'Galician',
+  'gn': 'Guarani',
+  'gom': 'Goan Konkani',
+  'gu': 'Gujarati',
+  'ha': 'Hausa',
+  'haw': 'Hawaiian',
+  'he': 'Hebrew',
+  'hi': 'Hindi',
+  'hmn': 'Hmong',
+  'hr': 'Croatian',
+  'ht': 'Haitian Creole',
+  'hu': 'Hungarian',
+  'hy': 'Armenian',
+  'id': 'Indonesian',
+  'ig': 'Igbo',
+  'ilo': 'Iloko',
+  'is': 'Icelandic',
+  'it': 'Italian',
+  'iw': 'Hebrew (old code)',
+  'ja': 'Japanese',
+  'jv': 'Javanese',
+  'jw': 'Javanese (alternative code)',
+  'ka': 'Georgian',
+  'kk': 'Kazakh',
+  'km': 'Khmer',
+  'kn': 'Kannada',
+  'ko': 'Korean',
+  'kri': 'Krio',
+  'ku': 'Kurdish',
+  'ky': 'Kyrgyz',
+  'la': 'Latin',
+  'lb': 'Luxembourgish',
+  'lg': 'Ganda',
+  'ln': 'Lingala',
+  'lo': 'Lao',
+  'lt': 'Lithuanian',
+  'lus': 'Mizo',
+  'lv': 'Latvian',
+  'mai': 'Maithili',
+  'mg': 'Malagasy',
+  'mi': 'Maori',
+  'mk': 'Macedonian',
+  'ml': 'Malayalam',
+  'mn': 'Mongolian',
+  'mni-Mtei': 'Manipuri (Meitei Mayek script)',
+  'mr': 'Marathi',
+  'ms': 'Malay',
+  'mt': 'Maltese',
+  'my': 'Burmese',
+  'ne': 'Nepali',
+  'nl': 'Dutch',
+  'no': 'Norwegian',
+  'nso': 'Northern Sotho',
+  'ny': 'Nyanja (Chichewa)',
+  'om': 'Oromo',
+  'or': 'Odia (Oriya)',
+  'pa': 'Punjabi',
+  'pl': 'Polish',
+  'ps': 'Pashto',
+  'pt': 'Portuguese',
+  'qu': 'Quechua',
+  'ro': 'Romanian',
+  'ru': 'Russian',
+  'rw': 'Kinyarwanda',
+  'sa': 'Sanskrit',
+  'sd': 'Sindhi',
+  'si': 'Sinhala',
+  'sk': 'Slovak',
+  'sl': 'Slovenian',
+  'sm': 'Samoan',
+  'sn': 'Shona',
+  'so': 'Somali',
+  'sq': 'Albanian',
+  'sr': 'Serbian',
+  'st': 'Southern Sotho',
+  'su': 'Sundanese',
+  'sv': 'Swedish',
+  'sw': 'Swahili',
+  'ta': 'Tamil',
+  'te': 'Telugu',
+  'tg': 'Tajik',
+  'th': 'Thai',
+  'ti': 'Tigrinya',
+  'tk': 'Turkmen',
+  'tl': 'Tagalog',
+  'tr': 'Turkish',
+  'ts': 'Tsonga',
+  'tt': 'Tatar',
+  'ug': 'Uyghur',
+  'uk': 'Ukrainian',
+  'ur': 'Urdu',
+  'uz': 'Uzbek',
+  'vi': 'Vietnamese',
+  'xh': 'Xhosa',
+  'yi': 'Yiddish',
+  'yo': 'Yoruba',
+  'zh': 'Chinese',
+  'zh-CN': 'Chinese (Simplified)',
+  'zh-TW': 'Chinese (Traditional)',
+  'zu': 'Zulu'
+};
+
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'welcome.html'));
@@ -122,17 +262,16 @@ app.get('/listLanguages', (req, res) => {
       try {
         const parsed = JSON.parse(body.toString());
         const languageCodes = parsed.data.languages.map(lang => lang.language);
-        res.send(languageCodes);
+
+        // Map codes to full names
+        const languageFullNames = languageCodes.map(code => languageNames[code] || code);
+        res.send(languageFullNames);
+        
       } catch (e) {
         console.error(e);
         res.status(500).send("An error occurred while parsing the language list.");
       }
     });
-  });
-
-  request.on('error', (e) => {
-    console.error(e);
-    res.status(500).send("An error occurred while listing languages.");
   });
 
   request.end();

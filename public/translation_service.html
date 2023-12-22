@@ -10,31 +10,35 @@
 <body>
     <h1>Google Translate API Demo</h1>
 
-    <h2>Detect Language</h2>
-    <input type="text" id="detectText" placeholder="Enter text to detect language">
-    <button onclick="detectLanguage()">Detect Language</button>
-
-    <h2>List Languages</h2>
-    <button onclick="listLanguages()">List Languages</button>
-
-    <div id="languageListResults" class="language-list">
-
+    <div class="input-box">
+        <h2>Detect Language</h2>
+        <textarea id="detectText" class="styled-textarea" placeholder="Enter text to detect language"></textarea>
+        <button class="button" onclick="detectLanguage()">Detect Language</button>
     </div>
 
-    <p style="color: red; font-weight: bold;">
-        <br>It's your job to look up the languages to find out what they correspond to.
-    </p>
+    <div class="input-box">
+        <h2>List Languages</h2>
+        <button class="button" onclick="listLanguages()">List Languages</button>
+        <div id="languageListResults" class="language-list">
+            <!-- Languages will be listed here -->
+        </div>
+    </div>
 
-    <h2>Translate Text</h2>
-    <input type="text" id="translateText" placeholder="Enter text to translate">
-    <input type="text" id="targetLang" placeholder="Enter target language (e.g., 'es')">
-    <button onclick="translateText()">Translate</button>
+    <div class="input-box">
+        <h2>Translate Text</h2>
+        <textarea id="translateText" class="styled-textarea" placeholder="Enter text to translate"></textarea>
+        <input type="text" id="targetLang" class="styled-input" placeholder="Enter target language code (e.g., 'es')">
+        <button class="button" onclick="translateText()">Translate</button>
+    </div>
 
-    <h2>Results:</h2>
-    <div id="detectionAndTranslationResults"></div>
+    <div class="input-box">
+        <h2>Results:</h2>
+        <div id="detectionAndTranslationResults" class="results-container">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
 
     <script src="script.js"></script>
+    
 </body>
 </html>
-
-
