@@ -1,7 +1,7 @@
-const express = require('express');
-const https = require('https');
-const qs = require('querystring');
-const path = require('path');
+const express = require('express'); // Express is a minimal and flexible Node.js web application framework
+const https = require('https'); // The HTTP module provides a way of making Node.js transfer data over HTTP (Hyper Text Transfer Protocol).
+const qs = require('querystring');  // The Query String module provides a way of parsing the URL query string.
+const path = require('path'); // The Path module provides a way of working with directories and file paths.
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 require("dotenv").config({ path: path.resolve(__dirname, 'credential/.env')});
@@ -9,9 +9,13 @@ require("dotenv").config({ path: path.resolve(__dirname, 'credential/.env')});
 const app = express();
 app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static('public')); 
+
+// these are needed for POST
+app.use(express.urlencoded({ extended: true })); // a method inbuilt in express to recognize the incoming Request Object as strings or arrays
+app.use(express.json()); // a method inbuilt in express to recognize the incoming Request Object as a JSON Object
+
+
+app.use(express.static('public')); // serve images, CSS files, and JavaScript files in a directory named public, Express looks up the files relative to the static directory, so the name of the static directory is not part of the URL.
 
 const uri = process.env.MONGO_CONNECTION_STRING;
 const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
@@ -158,7 +162,6 @@ const languageNames = {
   'zu': 'Zulu'
 };
 
-
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'welcome.html'));
 });
@@ -188,7 +191,7 @@ app.post('/translate', async (req, res) => {
     } else {
         await collection.insertOne({ name, email, loginCount: 1 });
         console.log('New user added to MongoDB');
-    }
+    } 
     res.sendFile(path.join(__dirname, 'public', 'translation_service.html'));
   } catch (error) {
     console.error('Error interacting with MongoDB', error);
@@ -221,12 +224,12 @@ app.post('/detectLanguage', (req, res) => {
     const chunks = [];
 
     response.on('data', function (chunk) {
-    chunks.push(chunk);
+      chunks.push(chunk);
     });
 
     response.on('end', function () {
-    const body = Buffer.concat(chunks);
-    res.send(body.toString()); 
+      const body = Buffer.concat(chunks);
+      res.send(body.toString()); 
     });
   });
 
@@ -237,6 +240,7 @@ app.post('/detectLanguage', (req, res) => {
 
   request.write(postData);
   request.end();
+
 });
   
 app.get('/listLanguages', (req, res) => {
@@ -280,6 +284,7 @@ app.get('/listLanguages', (req, res) => {
 
 
 app.post('/translateText', (req, res) => {
+  // sourceLang is undefined in here since it's not included in the client side
   const { text, targetLang, sourceLang } = req.body;
 
   const postData = qs.stringify({
@@ -348,5 +353,5 @@ app.post('/checkLoginCount', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001; 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

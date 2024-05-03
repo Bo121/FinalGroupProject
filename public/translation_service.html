@@ -10,31 +10,33 @@
 <body>
     <h1>Translation Service</h1>
 
-    <div class="input-box">
-        <h2>List Languages</h2>
-        <button class="button" onclick="listLanguages()">List Languages</button>
-        <div id="languageListResults" class="language-list">
-            <!-- Languages will be listed here -->
+    <div class="main-container">
+        <div class="input-box" id="list-languages">
+            <h2>List Languages</h2>
+            <button class="button" onclick="listLanguages()">List Languages</button>
+            <div id="languageListResults" class="language-list">
+                <!-- Languages will be listed here -->
+            </div>
+        </div>
+
+        <div class="input-box" id="detect-translate">
+            <h2>Detect / Translate Language</h2>
+            <textarea id="detectText" class="styled-textarea" placeholder="Enter text to detect language or to translate"></textarea>
+            <button class="button" onclick="detectLanguage()">Detect Language</button>
+            <input type="text" id="targetLang" class="styled-input" placeholder="Enter target language code or name (e.g., 'es' or 'Spanish')">
+            <button class="button" onclick="translateText()">Translate</button>
         </div>
     </div>
 
-    <div class="input-box">
-        <h2>Detect / Translate Language</h2>
-        <textarea id="detectText" class="styled-textarea" placeholder="Enter text to detect language or to translate"></textarea>
-        <button class="button" onclick="detectLanguage()">Detect Language</button>
-        <input type="text" id="targetLang" class="styled-input" placeholder="Enter target language code or name (e.g., 'es' or 'Spanish')">
-        <button class="button" onclick="translateText()">Translate</button>
-    </div>
-
-
-    <div class="input-box">
+    <div class="input-box results-container" id="results">
         <h2>Results:</h2>
-        <div id="detectionAndTranslationResults" class="results-container">
+        <div id="detectionAndTranslationResults">
             <!-- Results will be displayed here -->
         </div>
     </div>
 
     <script src="script.js"></script>
-    
 </body>
 </html>
+
+
